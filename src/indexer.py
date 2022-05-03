@@ -36,6 +36,10 @@ def create_html_block(entries) -> str:
 
     return html_block
 
+def read_template(file) -> str:
+    with open(file) as f:
+        return f.readlienes()
+
 
 def main():
     """Main method"""
@@ -43,8 +47,17 @@ def main():
 
     # html block erstellen
     block = create_html_block(entries)
+
+    # template einlesen
+    template = read_template(r"../tmpl/index.template")
+    # block in template einfügen
+    # template als index.html in ./html speichern
+
+
     print(len(entries))
     print(block)
+    print(template)
+
 
 
 if __name__ == "__main__":
