@@ -27,12 +27,24 @@ def create_entries(md_dir) -> []:
 
     return entries
 
+def create_html_block(entries) -> str:
+    """Create html for the given entries"""
+    html_block = ""
+    for e in entries:
+        paragraph = '<p><a href="{0}">{1} ({2})</a></p>\n\r'
+        html_block = html_block + paragraph.format(e.url, e.title, e.date)
+
+    return html_block
+
 
 def main():
     """Main method"""
     entries = create_entries(MD_DIR)
 
+    # html block erstellen
+    block = create_html_block(entries)
     print(len(entries))
+    print(block)
 
 
 if __name__ == "__main__":
