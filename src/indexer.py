@@ -3,6 +3,7 @@ from pathlib import Path
 
 MD_DIR = '../md/'
 HT_DIR = '../html/'
+PLACEHOLDER = '$body$'
 
 class Entry:
     def __init__(self, url):
@@ -38,7 +39,7 @@ def create_html_block(entries) -> str:
 
 def read_template(file) -> str:
     with open(file) as f:
-        return f.readlienes()
+        return f.read()
 
 
 def main():
@@ -51,7 +52,12 @@ def main():
     # template einlesen
     template = read_template(r"../tmpl/index.template")
     # block in template einfügen
+    index_html = str(template).replace(PLACEHOLDER, block)
+    index_html = str(index_html).replace('.md', '.html')
     # template als index.html in ./html speichern
+    index_file = HT_DIR + 'index.html'
+    with open(index_file, "w") as f:
+        f.write(index_html)
 
 
     print(len(entries))
