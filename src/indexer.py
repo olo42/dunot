@@ -7,22 +7,51 @@ HT_DIR = '../html/'
 class Entry:
     def __init__(self, url):
         self.url = url
+        self.title = ''
+        self.date = ''
 
-entries = []
+    def set_title(self, title):
+        self.title = title
 
-for p in Path(MD_DIR).glob('**/*.md'):
-    with p.open() as f:
-        lines = f.readlines()
-        entry = Entry(p.name)
-        for line in lines:
-            if line.startswith('title:'):
-                entry.title = line.split(":")
-            if line.startswith('date:'):
-                entry.date = line.split(":")
+    def get_title(self) -> str:
+        return self.title
 
-        entries.append(entry)
+    def set_date(self, date):
+        self.date = date
 
-print(len(entries))
+def create_entries(md_dir) -> []:
+    """Create list of Entry objects"""
+
+    entries = []
+
+    for p in Path(md_dir).glob('**/*.md'):
+        with p.open() as f:
+            lines = f.readlines()
+            entry = Entry(p.name)
+            for line in lines:
+                if line.startswith('title:'):
+                    entry.set_title(line.split(":"))
+                if line.startswith('date:'):
+                    entry.set_date(line.split(":"))
+
+            entries.append(entry)
+
+    return entries
+
+
+def main():
+    """Main method"""
+    entries = create_entries(MD_DIR)
+
+    print(len(entries))
+    
+    for e in entries:
+        print(e.get_title())
+
+
+if __name__ == "__main__":
+    main()
+
 
 
 
