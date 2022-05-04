@@ -165,7 +165,6 @@
   <script src="s5/default/slides.js" type="text/javascript"></script>
 </head>
 <body>
-<!-- 
 <div class="layout">
 $body$
 </div>
