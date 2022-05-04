@@ -1,4 +1,5 @@
 """Create index.html for Zetelkasten"""
+import os
 from pathlib import Path
 
 MD_DIR = '../md/'
@@ -15,6 +16,7 @@ def create_entries(md_dir) -> []:
     """Create list of Entry objects"""
     entries = []
     for p in Path(md_dir).glob('**/*.md'):
+        convert_md_to_html(p.stem, HT_DIR)
         with p.open() as f:
             lines = f.readlines()
             entry = Entry(p.name)
@@ -27,6 +29,14 @@ def create_entries(md_dir) -> []:
             entries.append(entry)
 
     return entries
+
+def convert_md_to_html(file, html_dir) -> None:
+    cmd = 'pandoc --standalone --template=../tmpl/html_page.template {0} -o {1}'
+    md_file = MD_DIR + file + '.md'
+    html_file = HT_DIR + file + '.html'
+    cmd = cmd.format(md_file, html_file)
+    print(cmd)
+    os.system(cmd)
 
 def create_html_block(entries) -> str:
     """Create html for the given entries"""
@@ -60,9 +70,9 @@ def main():
         f.write(index_html)
 
 
-    print(len(entries))
-    print(block)
-    print(template)
+    #print(len(entries))
+    #print(block)
+    #print(template)
 
 
 
