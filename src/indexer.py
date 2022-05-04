@@ -12,10 +12,10 @@ class Entry:
         self.title = None
         self.date = None
 
-def create_entries(md_dir) -> []:
+def create_entries(MD_DIR) -> []:
     """Create list of Entry objects"""
     entries = []
-    for p in Path(md_dir).glob('**/*.md'):
+    for p in Path(MD_DIR).glob('**/*.md'):
         convert_md_to_html(p.stem, HT_DIR)
         with p.open() as f:
             lines = f.readlines()
@@ -51,20 +51,20 @@ def read_template(file) -> str:
     with open(file) as f:
         return f.read()
 
+def parse_template(template, block) -> str:
+    index_html = str(template).replace(PLACEHOLDER, block)
+    index_html = str(index_html).replace('.md', '.html')
+    return index_html
+
 
 def main():
     """Main method"""
     entries = create_entries(MD_DIR)
-
-    # html block erstellen
     block = create_html_block(entries)
-
-    # template einlesen
     template = read_template(r"../tmpl/index.template")
-    # block in template einfügen
-    index_html = str(template).replace(PLACEHOLDER, block)
-    index_html = str(index_html).replace('.md', '.html')
-    # template als index.html in ./html speichern
+    index_html = parse_template(template, block)
+
+    # save template as index.html
     index_file = HT_DIR + 'index.html'
     with open(index_file, "w") as f:
         f.write(index_html)
