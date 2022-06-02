@@ -2,3 +2,10 @@ env/
 md/
 html
 src/.vimspector.json
+**/__pychace__/
+conftest/
+zettelkasten/__pycache__/
+zettelkasten/__pycache__/
+tests/zettelkasten/__pycache__/
+tests/__pycache__/
+.vscode/*
