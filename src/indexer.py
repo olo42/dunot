@@ -57,8 +57,11 @@ def create_html_block(entries) -> str:
     return html_block
 
 def read_template(file) -> str:
-    with open(file) as f:
-        return f.read()
+    try:
+        with open(file) as f:
+            return f.read()
+    except:
+        print('ERROR: File or directory does not exist: {}'.format(file))
 
 def parse_template(template, block) -> str:
     index_html = str(template).replace(PLACEHOLDER, block)
@@ -76,8 +79,11 @@ def main():
 
     # save template as index.html
     index_file = HT_DIR + 'index.html'
-    with open(index_file, "w") as f:
-        f.write(index_html)
+    try: 
+        with open(index_file, "w") as f:
+            f.write(index_html)
+    except:
+        print('ERROR: File or directory does not exist: {}'.format(index_file))      
 
 if __name__ == "__main__":
     main()
